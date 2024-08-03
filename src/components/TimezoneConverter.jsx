@@ -139,6 +139,10 @@ const TimezoneConverter = () => {
         setTimeZones(updatedTimeZones);
     };
 
+    const handleCalendarPlusClick = () => {
+        window.location.href = 'https://calendar.google.com/calendar/u/0/r/eventedit';
+    };
+    
     return (
         <div className={`container ${isDarkTheme ? 'dark-theme' : 'light-theme'}`}>
             <h1>Timezone Converter</h1>
@@ -167,7 +171,7 @@ const TimezoneConverter = () => {
                         <i className="fa-regular fa-calendar-days fa-xl calendar" onClick={handleIconClick}></i>
                     </div>
                     <div className='icons'>
-                        <button>
+                        <button onClick={handleCalendarPlusClick}>
                             <i className="fa-solid fa-calendar-plus fa-xl"></i>
                         </button>
                         <button onClick={reverseTimezones}>
@@ -185,18 +189,16 @@ const TimezoneConverter = () => {
                             )}
                         </button>
                     </div>
-                   
                 </div>
                 <div className='bottom'>
-                        {isLinkVisible && generatedLink && (
-                            <div className="link-box">
-                                <p>{generatedLink}</p>
-                            </div>
-                        )}
-                    </div>
+                    {isLinkVisible && generatedLink && (
+                        <div className="link-box">
+                            <p>{generatedLink}</p>
+                        </div>
+                    )}
+                </div>
             </div>
-
-
+    
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="droppable">
                     {(provided) => (
@@ -234,6 +236,7 @@ const TimezoneConverter = () => {
             </DragDropContext>
         </div>
     );
+    
 };
 
 export default TimezoneConverter;
