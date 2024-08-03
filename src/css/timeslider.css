@@ -1,0 +1,151 @@
+.slider-container {
+    border: 1px solid rgb(201, 201, 201);
+    padding: 0 2%;
+    position: relative;
+    cursor: pointer;
+}
+
+.slider-container:hover {
+    border:1px solid #0197c9;
+}
+
+.timezone {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding-left: 20px; 
+}
+
+.drag-handle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px; 
+    height: 100%;
+    background: linear-gradient(to bottom, rgb(201, 201, 201) 0%, rgb(201, 201, 201) 50%, transparent 50%, transparent 100%);
+    background-size: 1px 5px; 
+    margin-top: 20px;
+}
+
+.drag-handle::after {
+    content: '';
+    position: absolute;
+    top: 2;
+    left: 5px;
+    width: 3px; 
+    height: 100%;
+    background: linear-gradient(to bottom, rgb(201, 201, 201) 0%, rgb(201, 201, 201)  50%, transparent 50%, transparent 100%);
+    background-size: 1px 5px; 
+    margin-top: 20px;
+}
+
+.timezone h2{
+    color: #585858;
+    font-size: 30px;
+}
+
+.timezone .time h2 {
+    border: 1px solid rgb(201, 201, 201);
+    width: 250px;
+    text-align: center;
+    padding: 5px;
+    margin-right: 100px;
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+.timezone .time p {
+    width: 260px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+}
+
+.timezone p {
+    color: gray;
+}
+
+.cancelmark {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+    cursor: pointer;
+    color: #8e8e8e;
+    visibility: hidden;
+}
+
+.cancelmark:hover{
+    color: rgb(218, 1, 1);
+}
+
+.slider-container:hover .cancelmark {
+    visibility:visible
+}
+
+.horizontal-slider {
+    height: 18px;
+    background: linear-gradient(90deg, #597fae 0%, #eefbf9 40%, #eefbf9 60%, #597fae 100%);
+    position: relative;
+    border: 1px solid #d5d5d5;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    margin-bottom: 40px;
+}
+
+.thumb {
+    height: 30px;
+    width: 35px;
+    background-color: #fcfcfc;
+    cursor: pointer;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #d5d5d5;
+    font-size: 12px;
+    outline: none;
+    border: 1px solid #d5d5d5;
+    margin-top: -6.5px;
+    transform: translateX(-50%);
+}
+
+.track {
+    background: transparent;
+    height: 100%;
+}
+
+.mark {
+    width: 2px;
+    height: 100%;
+    background-color: #7f7e7e;
+}
+
+.labels {
+    position: relative;
+    top: -35px;
+}
+
+.label {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 500;
+    color:#8e8e8e;
+}
+
+.major {
+    height: 100%;
+}
+
+.minor {
+    height: 40%;
+    margin-top: 6px;
+}
+
+.drag-handle {
+    cursor: grab; 
+    height: 70%;
+    position: absolute;
+    left: 0;
+}
