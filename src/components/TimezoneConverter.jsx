@@ -159,6 +159,7 @@ const TimezoneConverter = () => {
                                 </option>
                             ))}
                         </select>
+                        <i className="fa-solid fa-plus fa-xl"></i>
                     </div>
                     <div className='datepicker'>
                         <ReactDatePicker
