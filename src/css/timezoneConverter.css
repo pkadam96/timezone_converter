@@ -115,6 +115,9 @@ i {
     border-color: rgb(220, 218, 218);
 }
 
+.dark-theme .bottom p{
+    color: black;
+}
 .link-box {
    padding-left: 20px;
    border: 1px solid #ccc;
