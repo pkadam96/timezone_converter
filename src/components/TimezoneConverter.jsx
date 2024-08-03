@@ -19,6 +19,7 @@ const TimezoneConverter = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const datePickerRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(moment());
+    const selectRef = useRef(null);
     const [timeZones, setTimeZones] = useState([
         {
             id: '1',
@@ -76,6 +77,7 @@ const TimezoneConverter = () => {
             const newTimezones = [...timeZones, newTimezone];
             setTimeZones(newTimezones);
             updateLink(newTimezones);
+            selectRef.current.value = "";
         }
     };
 
@@ -149,7 +151,7 @@ const TimezoneConverter = () => {
             <div className='header'>
                 <div className='top'>
                     <div className="add">
-                        <select onChange={handleSelectChange} defaultValue="">
+                        <select onChange={handleSelectChange} defaultValue="" ref={selectRef}>
                             <option value="" disabled>
                                 Add Time Zone, City, or Town
                             </option>
