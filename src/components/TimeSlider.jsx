@@ -46,7 +46,9 @@ const TimeSlider = ({ abbreviation, name, gmtOffset, onRemove, selectedDate, dra
 
     return (
         <div className="slider-container">
-            <i className="fa-solid fa-xmark fa-lg cancelmark" onClick={onRemove}></i>
+            <div className='cancelmark' onClick={onRemove}>
+                <i className="fa-solid fa-xmark fa-lg"></i>
+            </div>
             <div className='timezone'>
                 <div className='drag-handle' {...dragHandleProps}></div>
                 <div>
