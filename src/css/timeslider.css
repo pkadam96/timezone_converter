@@ -68,16 +68,19 @@
 .cancelmark {
     position: absolute;
     right: 0;
-    padding: 10px 20px;
     cursor: pointer;
     visibility: hidden; 
+    height: 20px;
+    width: 20px;
 }
 
 .cancelmark i {
     color: #8e8e8e; 
+    height: 30px;
+    width: 30px;
 }
 
-.cancelmark:hover i {
+.cancelmark i:hover {
     color: rgb(218, 1, 1); 
 }
 

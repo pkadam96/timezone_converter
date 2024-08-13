@@ -6,6 +6,7 @@ import '../css/timezoneConverter.css';
 import TimeSlider from './TimeSlider';
 import timezones from '../data/timezones';
 import moment from 'moment-timezone';
+import { v4 as uuidv4 } from 'uuid';
 
 const formatTime = (time, timezone) => {
     const localDate = moment.tz(time, timezone);
@@ -47,11 +48,14 @@ const TimezoneConverter = () => {
         setIsDarkTheme(!isDarkTheme);
     };
 
-    const handleRemove = (index) => {
-        const newTimezones = [...timeZones];
-        newTimezones.splice(index, 1);
-        setTimeZones(newTimezones);
-        updateLink(newTimezones);
+    const handleRemove = (id) => {
+        setTimeZones((prevTimeZones) => {
+            const newTimezones = prevTimeZones.filter(tz => tz.id !== id);
+            updateLink(newTimezones);
+            console.log("removed "+ id);
+            
+            return newTimezones;
+        });
     };
 
     const handleIconClick = () => {
@@ -69,7 +73,7 @@ const TimezoneConverter = () => {
         const foundTimezone = timezones.find((tz) => tz.abbreviation === selectedAbbreviation);
         if (foundTimezone) {
             const newTimezone = {
-                id: Date.now().toString(),
+                id: uuidv4(),
                 ...foundTimezone,
                 formattedTime: formatTime(currentTime, foundTimezone.timezone),
                 time: moment.tz(moment(), foundTimezone.timezone).minutes() + moment.tz(moment(), foundTimezone.timezone).hours() * 60,
@@ -111,7 +115,7 @@ const TimezoneConverter = () => {
                 const foundTimezone = timezones.find((tz) => tz.abbreviation === abbr);
                 if (foundTimezone) {
                     return {
-                        id: Date.now().toString(),
+                        id: uuidv4(),
                         ...foundTimezone,
                         formattedTime: formatTime(currentTime, foundTimezone.timezone),
                         time: moment.tz(moment(), foundTimezone.timezone).minutes() + moment.tz(moment(), foundTimezone.timezone).hours() * 60,
@@ -124,12 +128,13 @@ const TimezoneConverter = () => {
     }, []);
 
     useEffect(() => {
-        const updatedTimeZones = timeZones.map(tz => ({
-            ...tz,
-            formattedTime: formatTime(currentTime, tz.timezone),
-        }));
-        setTimeZones(updatedTimeZones);
-    }, [currentTime]);
+    const updatedTimeZones = timeZones.map(tz => ({
+        ...tz,
+        formattedTime: formatTime(currentTime, tz.timezone),
+    }));
+    setTimeZones(updatedTimeZones);
+}, [currentTime, timeZones]);
+
 
     const handleSliderChange = (time) => {
         setCurrentTime(time);
@@ -203,30 +208,27 @@ const TimezoneConverter = () => {
             </div>
     
             <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="droppable">
+                <Droppable droppableId="timezones">
                     {(provided) => (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            className='drop-target'
-                        >
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
                             {timeZones.map((tz, index) => (
                                 <Draggable key={tz.id} draggableId={tz.id} index={index}>
                                     {(provided) => (
                                         <div
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
                                         >
                                             <TimeSlider
                                                 abbreviation={tz.abbreviation}
                                                 name={tz.name}
                                                 gmtOffset={tz.gmtOffset}
                                                 formatTime={tz.formattedTime}
-                                                onRemove={() => handleRemove(index)}
+                                                onRemove={() => handleRemove(tz.id)}
                                                 selectedDate={selectedDate}
-                                                dragHandleProps={provided.dragHandleProps} // Pass dragHandleProps
-                                                time={tz.time} // Pass the time prop
-                                                onSliderChange={handleSliderChange} // Pass the handleSliderChange function
+                                                dragHandleProps={provided.dragHandleProps} 
+                                                time={tz.time}
+                                                onSliderChange={handleSliderChange} 
                                             />
                                         </div>
                                     )}
@@ -239,7 +241,6 @@ const TimezoneConverter = () => {
             </DragDropContext>
         </div>
     );
-    
 };
 
 export default TimezoneConverter;

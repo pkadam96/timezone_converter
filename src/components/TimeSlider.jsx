@@ -6,7 +6,7 @@ import moment from 'moment-timezone';
 
 const TimeSlider = ({ abbreviation, name, gmtOffset, onRemove, selectedDate, dragHandleProps, time, onSliderChange }) => {
     const [localTime, setLocalTime] = useState(time);
-
+    
     useEffect(() => {
         const intervalId = setInterval(() => {
             const currentTime = moment.tz(moment(), name).minutes() + moment.tz(moment(), name).hours() * 60;
@@ -33,7 +33,7 @@ const TimeSlider = ({ abbreviation, name, gmtOffset, onRemove, selectedDate, dra
         const minutesPart = minutes % 60;
         const period = hours >= 12 ? 'pm' : 'am';
         const adjustedHours = hours % 12 === 0 ? 12 : hours % 12;
-        return `${adjustedHours}:${minutesPart.toString().padStart(2, '0')}${period}`;
+        return `${hours}:${minutesPart.toString().padStart(2, '0')}`;
     };
 
     const handleSliderChange = (value) => {
@@ -47,7 +47,7 @@ const TimeSlider = ({ abbreviation, name, gmtOffset, onRemove, selectedDate, dra
     return (
         <div className="slider-container">
             <div className='cancelmark' onClick={onRemove}>
-                <i className="fa-solid fa-xmark fa-lg"></i>
+                <i className="fa-solid fa-xmark fa-lg" ></i>
             </div>
             <div className='timezone'>
                 <div className='drag-handle' {...dragHandleProps}></div>
@@ -56,7 +56,7 @@ const TimeSlider = ({ abbreviation, name, gmtOffset, onRemove, selectedDate, dra
                     <p>{name}</p>
                 </div>
                 <div className='time'>
-                    <h2>{moment().utcOffset(gmtOffset * 60).startOf('day').minutes(localTime).format('h:mm a')}</h2>
+                    <h2>{moment().utcOffset(gmtOffset * 60).startOf('day').minutes(localTime).format('HH:mm')}</h2>
                     <p>
                         <span>GMT {gmtOffset >= 0 ? `+${gmtOffset}` : gmtOffset}</span>
                         <span>{new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
@@ -83,7 +83,7 @@ const TimeSlider = ({ abbreviation, name, gmtOffset, onRemove, selectedDate, dra
                 marks={generateMarks()}
             />
             <div className="labels">
-                {generateMarks().filter(mark => mark % 180 === 0).map((mark, index, array) => (
+                {generateMarks().filter(mark => mark % 60 === 0).map((mark, index, array) => (
                     index < array.length && (
                         <div 
                             key={mark} 
